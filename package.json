@@ -8,7 +8,8 @@
     "test:debug": "playwright test --debug",
     "codegen": "playwright codegen",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",
@@ -24,8 +25,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "yarn lint --fix",
+      "yarn format"
     ]
   }
 }
