@@ -13,6 +13,7 @@ export default [
     rules: {
       'no-console': 'warn',
     },
+    ignores: [".vscode/", ".yarn/", "node_modules/", "yarn.lock", "playwright-report/", "test-results/"]
   },
   prettierConfig,
 ];
