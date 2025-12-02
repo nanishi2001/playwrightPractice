@@ -1,2 +1,3 @@
 # playwrightPractice
-Plactice E2E test with Playwright 
+
+Plactice E2E test with Playwright
