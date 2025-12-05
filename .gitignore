@@ -1,17 +1,7 @@
 # Visual Studio Code
 .vscode/
 
-# Yarn Berry (PnP)
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
 # Node.js
-yarn.lock
 node_modules/
 test-results/
 playwright-report/
