@@ -1,12 +1,12 @@
 # playwrightPractice
 
-このリポジトリの目的はPlaywrightでE2Eテストを学習・実践
+このリポジトリの目的はPlaywrightでのE2Eテストを学習・実践です
 
 ## 🛠 技術スタック
 
 - **テストフレームワーク**: Playwright Test v1.49.0+
-- **言語**: TypeScript v5.3+
-- **パッケージマネージャー**: pnpm v10.24+
+- **言語**: TypeScript v5.3+. NodeJS v22.21.1
+- **パッケージマネージャー**: pnpm v10.24.0
 - **リンター**: ESLint + TypeScript ESLint
 - **フォーマッター**: Prettier
 - **コミットフック**: Husky + lint-staged
