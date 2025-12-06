@@ -207,3 +207,8 @@ commitメッセージが空の場合、以下のエラーが表示されます�
 **除外条件:**
 
 - dependabotのPRは対象外
+
+## 注意点
+ - WSL + VSCodeを使用している場合、WindowsからではなくWSL側からVSCodeを起動しないと依存関係が適切に処理できず、Imoprt Errorが発生することがある
+ - voltaのグローバル設定の状況によってはキャッシュの影響で対象のNodeJSやpnpmをインストールしていてもwarningが発生することがある
+ その場合は`~/.volta/tools/user/platform.json`に記載されているグローバル設定を修正することで直ることもある
