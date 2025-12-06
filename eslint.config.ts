@@ -7,7 +7,14 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default [
   {
-    ignores: ['.vscode/', 'node_modules/', 'playwright-report/', 'test-results/'],
+    ignores: [
+      '.vscode/',
+      'node_modules/',
+      'playwright-report/',
+      'test-results/',
+      '.husky/',
+      '.github/',
+    ],
   },
   {
     settings: {
