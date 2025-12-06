@@ -182,3 +182,28 @@ commitメッセージが空の場合、以下のエラーが表示されます�
 ```
 
 メッセージが空の場合やエラーが検出された場合、commitは失敗します。
+
+## 🤖 GitHub Actions Workflows
+
+このプロジェクトには、PR管理を自動化するGitHub Actionsワークフローが含まれています。
+
+### Auto Approve PR Workflow
+
+**ファイル**: `.github/workflows/auto-approve-pr.yml`
+
+新しくオープンされたPRに対して自動的にApproveを実施します。
+
+**トリガー条件:**
+
+- PRがオープンされたとき
+- PRが再度オープンされたとき
+- PRに新しいコミットがプッシュされたとき
+
+**動作:**
+
+1. PRを自動的にApprove
+2. PR上にコメントを作成
+
+**除外条件:**
+
+- dependabotのPRは対象外
