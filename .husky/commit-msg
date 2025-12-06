@@ -1,0 +1,23 @@
+# commit-msg hook
+# Validates commit message format according to Conventional Commits
+
+COMMIT_MSG_FILE="$1"
+
+# Read commit message (exclude comments)
+COMMIT_MSG=$(sed '/^#/d' "$COMMIT_MSG_FILE" | tr -d '\n' | sed 's/[[:space:]]*$//')
+
+# Check if commit message is empty
+if [ -z "$COMMIT_MSG" ]; then
+  echo "❌ エラー: commitメッセージが空です"
+  echo ""
+  echo "以下の形式でcommitメッセージを記述してください："
+  echo "  <type>(<scope>): <subject>"
+  echo ""
+  echo "例："
+  echo "  feat(auth): ログイン機能を追加"
+  echo "  fix(button): ボタンのクリック動作を修正"
+  echo "  docs: READMEを更新"
+  exit 1
+fi
+
+exit 0
