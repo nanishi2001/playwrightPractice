@@ -1,0 +1,55 @@
+name: Lint and Format Check
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lint-and-format:
+    name: ESLint and Prettier Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.21.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESLint
+        run: pnpm lint
+        continue-on-error: true
+
+      - name: Check Prettier formatting
+        run: pnpm format --check
+        continue-on-error: true
+
+      - name: Comment on PR if checks fail
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '⚠️ ESLintまたはPrettierのチェックが失敗しました。\n\n以下のコマンドでローカルで修正してください：\n```bash\npnpm lint\npnpm format\n```'
+            })
