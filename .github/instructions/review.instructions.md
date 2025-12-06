@@ -1,6 +1,7 @@
 ---
 applyTo: "**"
-excludeAgent: "coding-review"
+excludeAgent: 
+ - "coding-review"
 ---
 
 ## レビュー手順
