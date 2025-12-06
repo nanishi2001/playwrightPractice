@@ -129,3 +129,56 @@ playwrightPractice/
 - CI/CD環境での自動リトライ設定
 - トレース機能による失敗時のデバッグ支援
 - Husky + lint-stagedによるコミット前の品質チェック
+
+## 💬 Commitメッセージ規約
+
+このプロジェクトでは[Conventional Commits](https://www.conventionalcommits.org/)に準拠したコミットメッセージを推奨しています。
+
+### Commitメッセージ形式
+
+```text
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+### タイプ一覧
+
+- **feat**: 新機能の追加
+- **fix**: バグ修正
+- **docs**: ドキュメントの変更
+- **style**: コードのフォーマット変更（機能的な変更なし）
+- **refactor**: 機能的な変更なしのコード改善
+- **perf**: パフォーマンス改善
+- **test**: テストの追加または修正
+- **chore**: ビルドツールやパッケージマネージャーの変更
+- **ci**: CI/CD設定の変更
+
+### Pre-commitフックの実行
+
+commitする際、以下の処理が自動的に実行されます：
+
+1. **ESLint**: ステージング済みのコードをリントチェック
+2. **Prettier**: ステージング済みのコードをフォーマット
+
+コードにエラーが検出された場合、commitは失敗します。
+
+### Commit-msgフックの検証
+
+commitメッセージが空の場合、以下のエラーが表示されます：
+
+```bash
+❌ エラー: commitメッセージが空です
+
+以下の形式でcommitメッセージを記述してください：
+  <type>(<scope>): <subject>
+
+例：
+  feat(auth): ログイン機能を追加
+  fix(button): ボタンのクリック動作を修正
+  docs: READMEを更新
+```
+
+メッセージが空の場合やエラーが検出された場合、commitは失敗します。
