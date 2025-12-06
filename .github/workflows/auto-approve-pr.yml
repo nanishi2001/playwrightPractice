@@ -1,0 +1,41 @@
+name: Auto Approve PR
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  approve:
+    name: Auto Approve Pull Request
+    runs-on: ubuntu-latest
+    # Skip approval for dependabot PRs - they have their own approval process
+    if: github.actor != 'dependabot[bot]'
+
+    steps:
+      - name: Approve PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              event: 'APPROVE',
+              body: '✅ 自動レビューで承認しました'
+            })
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '🎉 このPRは自動レビューで承認されました。マージする準備ができています。'
+            })
