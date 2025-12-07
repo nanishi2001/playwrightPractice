@@ -1,11 +1,11 @@
 import js from '@eslint/js';
-import { configs as tsLintConfig } from 'typescript-eslint';
-import unicorn from 'eslint-plugin-unicorn';
-import importPlugin from 'eslint-plugin-import';
-import functional from 'eslint-plugin-functional';
-import { configs as preferArrowFunctionsConfig } from 'eslint-plugin-prefer-arrow-functions';
-import playwright from 'eslint-plugin-playwright';
 import prettierConfig from 'eslint-config-prettier';
+import functional from 'eslint-plugin-functional';
+import importPlugin from 'eslint-plugin-import';
+import playwright from 'eslint-plugin-playwright';
+import { configs as preferArrowFunctionsConfig } from 'eslint-plugin-prefer-arrow-functions';
+import unicorn from 'eslint-plugin-unicorn';
+import { configs as tsLintConfig } from 'typescript-eslint';
 
 export default [
   {

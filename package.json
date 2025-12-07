@@ -45,5 +45,8 @@
       "pnpm lint",
       "pnpm format"
     ]
+  },
+  "dependencies": {
+    "prettier-plugin-organize-imports": "^4.3.0"
   }
 }
