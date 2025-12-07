@@ -151,6 +151,15 @@ export default [
   {
     ...playwright.configs['flat/recommended'],
     files: ['tests/**/*.spec.ts'],
+    rules: {
+      ...playwright.configs['flat/recommended'].rules,
+      'functional/no-expression-statements': [
+        'error',
+        {
+          ignoreCodePattern: ['test', 'expect', 'page.goto'],
+        },
+      ],
+    },
   },
   prettierConfig,
 ];
