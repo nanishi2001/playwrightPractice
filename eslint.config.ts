@@ -84,6 +84,17 @@ export default [
       // Verify that the swich statement exhausively covers all cases of the union type
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       'unicorn/prefer-switch': 'error',
+
+      // Restrict global variables
+      'no-restricted-globals': [
+        'error',
+        'eval',
+        'Boolean',
+        'Function',
+        'globalThis',
+        { name: 'isFinite', message: 'Use Number.isFinite instead' },
+        { name: 'isNaN', message: 'Use Number.isNaN instead' },
+      ],
     },
   },
   {
