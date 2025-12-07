@@ -117,6 +117,9 @@ export default [
           ignoreIdentifierPattern: ['^mut_', '^_mut_', '^#mut_'],
         },
       ],
+
+      // Strict Method Signatures
+      '@typescript-eslint/method-signature-style': 'error',
     },
   },
   {
