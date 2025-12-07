@@ -41,6 +41,19 @@ export default [
     },
   },
   {
+    rules: {
+      // Prevent type coercion to boolean
+      '@typescript-eslint/strict-boolean-expressions': [
+        'error',
+        {
+          allowString: false,
+          allowNumber: false,
+          allowNullableObject: false,
+        },
+      ],
+    },
+  },
+  {
     ...playwright.configs['flat/recommended'],
     files: ['tests/**/*.spec.ts'],
   },
