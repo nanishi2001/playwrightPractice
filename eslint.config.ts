@@ -120,6 +120,9 @@ export default [
 
       // Restrict Method Signatures
       '@typescript-eslint/method-signature-style': 'error',
+
+      // import rules
+      'import/no-cycle': 'error',
     },
   },
   {
