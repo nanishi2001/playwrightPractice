@@ -1,15 +1,26 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Constants
+const BASE_URL = 'https://hotel.testplanisphere.dev/ja';
+const DEFAULT_RETRIES = 0;
+const CI_RETRIES = 2;
+const CI_WORKERS = 1;
+
+// Computed constants
+const IS_CI = process.env.CI !== undefined;
+const RETRIES = IS_CI ? CI_RETRIES : DEFAULT_RETRIES;
+const WORKERS = IS_CI ? CI_WORKERS : undefined;
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
-  // forbidOnly: !!process.env.CI,
-  // retries: process.env.CI ? 2 : 0,
-  // workers: process.env.CI ? 1 : undefined,
+  forbidOnly: IS_CI,
+  retries: RETRIES,
+  workers: WORKERS,
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
-    baseURL: 'https://hotel.testplanisphere.dev/ja',
+    baseURL: BASE_URL,
   },
 
   projects: [
