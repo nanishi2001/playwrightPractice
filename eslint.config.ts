@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import { configs } from 'typescript-eslint';
 import unicorn from 'eslint-plugin-unicorn';
 import importPlugin from 'eslint-plugin-import';
+import functional from 'eslint-plugin-functional';
 import playwright from 'eslint-plugin-playwright';
 import prettierConfig from 'eslint-config-prettier';
 
@@ -30,6 +31,7 @@ export default [
   unicorn.configs.recommended,
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
+  functional.configs.recommended,
   {
     files: ['**/*.{ts,js}'],
     languageOptions: {
@@ -94,6 +96,26 @@ export default [
         'globalThis',
         { name: 'isFinite', message: 'Use Number.isFinite instead' },
         { name: 'isNaN', message: 'Use Number.isNaN instead' },
+      ],
+
+      // Strict Mutatuion
+      'functional/no-let': [
+        'error',
+        {
+          allowInForLoopInit: true,
+          allowInFunctions: false,
+          ignoreIdentifierPattern: ['^mut_', '^_mut_', '^#mut_'],
+        },
+      ],
+      'functional/immutable-data': [
+        'error',
+        {
+          ignoreClasses: false,
+          ignoreMapsAndSets: false,
+          ignoreImmediateMutation: true,
+          ignoreNonConstDeclarations: false,
+          ignoreIdentifierPattern: ['^mut_', '^_mut_', '^#mut_'],
+        },
       ],
     },
   },
