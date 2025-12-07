@@ -66,6 +66,20 @@ export default [
         },
       ],
       'prefer-template': 'error',
+
+      // Restrict the types usable in template literals
+      '@typescript-eslint/restrict-template-expressions': [
+        'error',
+        {
+          allowNumber: true,
+          allowBoolean: true,
+          allowNullish: false,
+          allowAny: false,
+          allowArray: false,
+          allowNever: false,
+          allowRegExp: false,
+        },
+      ],
     },
   },
   {
