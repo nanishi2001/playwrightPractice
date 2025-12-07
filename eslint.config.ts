@@ -51,6 +51,21 @@ export default [
           allowNullableObject: false,
         },
       ],
+
+      // Prevent the + and += operators from being used with non-numeric types
+      'no-implicit-coercion': 'error',
+      '@typescript-eslint/restrict-plus-operands': [
+        'error',
+        {
+          skipCompoundAssignments: false,
+          allowBoolean: false,
+          allowNullish: false,
+          allowNumberAndString: false,
+          allowRegExp: false,
+          allowAny: false,
+        },
+      ],
+      'prefer-template': 'error',
     },
   },
   {
