@@ -80,6 +80,10 @@ export default [
           allowRegExp: false,
         },
       ],
+
+      // Verify that the swich statement exhausively covers all cases of the union type
+      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      'unicorn/prefer-switch': 'error',
     },
   },
   {
