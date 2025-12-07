@@ -16,7 +16,7 @@
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "codegen": "playwright codegen",
-    "lint": "eslint --cache .",
+    "lint": "eslint --cache --fix .",
     "format": "prettier --write .",
     "prepare": "husky"
   },
@@ -43,6 +43,9 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "pnpm lint",
+      "pnpm format"
+    ],
+    "*.{json,md,markdown,css,scss,html}": [
       "pnpm format"
     ]
   },
