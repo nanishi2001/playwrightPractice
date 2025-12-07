@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "commonjs",
+    "module": "nodenext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["./**/*.ts", "eslint.config.ts"],
   "exclude": ["node_modules"]
