@@ -1,8 +1,9 @@
 import js from '@eslint/js';
-import { configs } from 'typescript-eslint';
+import { configs as tsLintConfig } from 'typescript-eslint';
 import unicorn from 'eslint-plugin-unicorn';
 import importPlugin from 'eslint-plugin-import';
 import functional from 'eslint-plugin-functional';
+import { configs as preferArrowFunctionsConfig } from 'eslint-plugin-prefer-arrow-functions';
 import playwright from 'eslint-plugin-playwright';
 import prettierConfig from 'eslint-config-prettier';
 
@@ -27,11 +28,12 @@ export default [
     },
   },
   js.configs.recommended,
-  ...configs.recommended,
+  ...tsLintConfig.recommended,
   unicorn.configs.recommended,
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
   functional.configs.recommended,
+  preferArrowFunctionsConfig.all,
   {
     files: ['**/*.{ts,js}'],
     languageOptions: {
@@ -123,6 +125,27 @@ export default [
 
       // import rules
       'import/no-cycle': 'error',
+
+      // Force sort method arguments
+      '@typescript-eslint/require-array-sort-compare': [
+        'error',
+        {
+          ignoreStringArrays: true,
+        },
+      ],
+
+      // Strict use arrow functions
+      'arrow-body-style': ['error', 'as-needed'],
+      'func-style': 'error',
+      'prefer-arrow-functions/prefer-arrow-functions': [
+        'error',
+        {
+          classPropertiesAllowed: false,
+          disallowPrototype: false,
+          returnStyle: 'implicit',
+          singleReturnOnly: false,
+        },
+      ],
     },
   },
   {

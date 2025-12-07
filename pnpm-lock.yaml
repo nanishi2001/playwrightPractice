@@ -34,6 +34,9 @@ importers:
       eslint-plugin-playwright:
         specifier: ^2.4.0
         version: 2.4.0(eslint@9.39.1(jiti@2.6.1))
+      eslint-plugin-prefer-arrow-functions:
+        specifier: ^3.9.1
+        version: 3.9.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
       eslint-plugin-unicorn:
         specifier: ^62.0.0
         version: 62.0.0(eslint@9.39.1(jiti@2.6.1))
@@ -1106,6 +1109,15 @@ packages:
     engines: { node: '>=16.9.0' }
     peerDependencies:
       eslint: '>=8.40.0'
+
+  eslint-plugin-prefer-arrow-functions@3.9.1:
+    resolution:
+      {
+        integrity: sha512-Mr9Ia8i5ohfCMcZBRedXXWdDJIo30gdKdPfRQ5DtO62yzogB5ErVGwQWPz+ycRlQPKpCAlBHpJdp1TCeCtt+YA==,
+      }
+    engines: { node: '>=18.0.0' }
+    peerDependencies:
+      eslint: '>=9.17.0'
 
   eslint-plugin-unicorn@62.0.0:
     resolution:
@@ -3245,6 +3257,15 @@ snapshots:
     dependencies:
       eslint: 9.39.1(jiti@2.6.1)
       globals: 16.5.0
+
+  eslint-plugin-prefer-arrow-functions@3.9.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3):
+    dependencies:
+      '@typescript-eslint/types': 8.48.0
+      '@typescript-eslint/utils': 8.48.0(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
+      eslint: 9.39.1(jiti@2.6.1)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   eslint-plugin-unicorn@62.0.0(eslint@9.39.1(jiti@2.6.1)):
     dependencies:
