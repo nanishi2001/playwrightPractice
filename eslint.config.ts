@@ -98,7 +98,7 @@ export default [
         { name: 'isNaN', message: 'Use Number.isNaN instead' },
       ],
 
-      // Strict Mutatuion
+      // Restrict Mutation
       'functional/no-let': [
         'error',
         {
@@ -118,7 +118,7 @@ export default [
         },
       ],
 
-      // Strict Method Signatures
+      // Restrict Method Signatures
       '@typescript-eslint/method-signature-style': 'error',
     },
   },
