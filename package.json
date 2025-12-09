@@ -1,6 +1,7 @@
 {
   "name": "playwright-practice",
   "version": "1.0.0",
+  "type": "module",
   "packageManager": "pnpm@10.24.0",
   "engines": {
     "node": "22.21.1",
@@ -16,6 +17,7 @@
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "codegen": "playwright codegen",
+    "show-report": "playwright show-report",
     "lint": "eslint --cache --fix .",
     "format": "prettier --write .",
     "prepare": "husky"

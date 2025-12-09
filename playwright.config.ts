@@ -17,10 +17,12 @@ export default defineConfig({
   forbidOnly: IS_CI,
   retries: RETRIES,
   workers: WORKERS,
-  reporter: 'html',
+  reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    trace: 'on-first-retry',
+    trace: 'on-all-retries',
     baseURL: BASE_URL,
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
   projects: [
@@ -28,13 +30,5 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
   ],
 });
