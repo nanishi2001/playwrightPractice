@@ -17,7 +17,9 @@ export default defineConfig({
   forbidOnly: IS_CI,
   retries: RETRIES,
   workers: WORKERS,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: IS_CI
+    ? [['list'], ['html', { open: 'never' }], ['@estruyf/github-actions-reporter']]
+    : [['list'], ['html', { open: 'never' }]],
   use: {
     trace: 'on-all-retries',
     baseURL: BASE_URL,
