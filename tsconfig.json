@@ -9,6 +9,6 @@
     "resolveJsonModule": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./**/*.ts", "eslint.config.ts"],
+  "include": ["./**/*.ts", "eslint.config.mts"],
   "exclude": ["node_modules"]
 }
