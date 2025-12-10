@@ -47,7 +47,7 @@
       "pnpm lint",
       "pnpm format"
     ],
-    "*.{json,md,markdown,css,scss,html}": [
+    "*.{json,md,markdown,html}": [
       "pnpm format"
     ]
   },

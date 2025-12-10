@@ -197,8 +197,8 @@ export default [
       'playwright/valid-title': [
         'error',
         {
-          ignoreTypeOfStepName: false
-        }
+          ignoreTypeOfStepName: false,
+        },
       ],
     },
   },
