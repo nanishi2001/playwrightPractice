@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 // Constants
-const BASE_URL = 'https://hotel.testplanisphere.dev/ja';
+const BASE_URL = 'https://hotel-example-site.takeyaqa.dev';
 const DEFAULT_RETRIES = 0;
 const CI_RETRIES = 2;
 const CI_WORKERS = 1;
