@@ -157,9 +157,19 @@ export default [
       'functional/no-expression-statements': [
         'error',
         {
-          ignoreCodePattern: ['test', 'expect', 'page.goto'],
+          ignoreCodePattern: [
+            '^test',
+            '^expect',
+            '^await expect',
+            '^.*.goto',
+            '^.*.click',
+            '^.*.waitFor',
+            '^.*.navigate',
+            '^.*.Promise.all',
+          ],
         },
       ],
+      'functional/no-return-void': 'off',
       'playwright/expect-expect': 'error',
       'playwright/missing-playwright-await': 'error',
       'playwright/no-conditional-in-test': 'error',
