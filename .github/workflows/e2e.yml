@@ -20,36 +20,9 @@ env:
   TEST_ENV: ${{ github.event.inputs.environment || 'local' }}
 
 jobs:
-  setup-target:
-    name: Setup Test Target
-    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' || github.event.inputs.environment == 'local' }}
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
-
-      - name: Clone test target
-        run: git clone https://github.com/takeyaqa/hotel-example-site test-target
-
-      - name: Install and Build test target
-        run: |
-          cd test-target
-          pnpm install
-          pnpm run start
-
-  playwright-tests:
+  e2e-tests:
     name: Run E2E Tests
-    needs: [setup-target]
-    if: ${{ always() && (needs.setup-target.result == 'success' || needs.setup-target.result == 'skipped') }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request_target' || github.event.inputs.environment == 'local' || github.event_name == 'workflow_dispatch' }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -67,12 +40,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Download test target build
+      - name: Setup test target
         if: ${{ env.TEST_ENV == 'local' }}
-        uses: actions/download-artifact@v4
-        with:
-          name: test-target-build
-          path: test-target/
+        run: |
+          git clone https://github.com/takeyaqa/hotel-example-site test-target
+          cd test-target
+          pnpm install
+          pnpm run build
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install chromium --with-deps
