@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import * as header from '../../pages/header.component.js';
 import * as homePage from '../../pages/home.page.js';
 import * as loginPage from '../../pages/login.page.js';
-import * as planPage from '../../pages/plan.page.js';
+import * as planPage from '../../pages/plans.page.js';
 import * as signupPage from '../../pages/signup.page.js';
 
 const beforeSetup = async (page: Readonly<Page>) => {
