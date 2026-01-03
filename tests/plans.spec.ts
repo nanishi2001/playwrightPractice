@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import * as planPage from '../pages/plan.page.js';
+import * as planPage from '../pages/plans.page.js';
 import * as reservePage from '../pages/reserve.page.js';
 
 const beforeSetup = async (page: Readonly<Page>) => {
