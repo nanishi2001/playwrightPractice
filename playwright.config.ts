@@ -1,7 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
 // Constants
-const BASE_URL = process.env.BASE_URL ?? 'https://hotel-example-site.takeyaqa.dev';
+const TEST_ENV = process.env.TEST_ENV ?? 'dev';
+const BASE_URL =
+  TEST_ENV === 'local' ? 'http://localhost:8080' : 'https://hotel-example-site.takeyaqa.dev';
 const DEFAULT_RETRIES = 0;
 const CI_RETRIES = 2;
 const CI_WORKERS = 1;
@@ -36,7 +38,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer:
-    BASE_URL.includes('localhost') || BASE_URL.includes('127.0.0.1')
+    TEST_ENV === 'local'
       ? {
           command: 'cd test-target && pnpm start',
           port: 8080,

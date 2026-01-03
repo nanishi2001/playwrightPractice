@@ -17,7 +17,6 @@ on:
 
 env:
   TEST_ENV: ${{ github.event.inputs.environment || 'local' }}
-  BASE_URL: ${{ (github.event.inputs.environment == 'dev') && 'https://hotel-example-site.takeyaqa.dev' || 'http://localhost:8080' }}
 
 jobs:
   setup-target:
@@ -86,8 +85,6 @@ jobs:
 
       - name: Run Playwright tests
         run: pnpm exec playwright test
-        env:
-          BASE_URL: ${{ env.BASE_URL }}
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
