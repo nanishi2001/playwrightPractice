@@ -18,6 +18,7 @@
     "test:debug": "playwright test --debug",
     "codegen": "playwright codegen",
     "show-report": "playwright show-report",
+    "test:local": "TEST_ENV=local playwright test",
     "lint": "eslint --cache --fix .",
     "format": "prettier --write .",
     "prepare": "husky"

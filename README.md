@@ -94,6 +94,28 @@ pnpm test:debug
 pnpm codegen
 ```
 
+### ローカル環境でのテスト実行
+
+ローカルにアプリケーションサーバーを起動してテストを実行することができます。
+
+1. **テスト対象のセットアップ** (初回のみ)
+
+   ```bash
+   git clone https://github.com/takeyaqa/hotel-example-site test-target
+   cd test-target
+   pnpm install
+   pnpm run build
+   cd ..
+   ```
+
+2. **テストの実行**
+   ```bash
+   pnpm test:local
+   ```
+
+> [!NOTE]  
+> `pnpm test:local` を実行すると、Playwright の `webServer` 機能により、自動的に `test-target` 内のサーバーが起動し、テスト完了後に停止します。手動でサーバーを起動しておく必要はありません。
+
 ## 🔍 コード品質
 
 ```bash

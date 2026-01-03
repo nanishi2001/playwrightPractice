@@ -2,12 +2,27 @@ name: Playwright Tests
 on:
   push:
     branches: [main]
-  pull_request:
+  pull_request_target:
+    types: [opened, edited, reopened, synchronize]
     branches: [main]
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        required: true
+        default: 'local'
+        type: choice
+        options:
+          - local
+          - dev
+
+env:
+  TEST_ENV: ${{ github.event.inputs.environment || 'local' }}
 
 jobs:
-  test:
+  e2e-tests:
+    name: Run E2E Tests
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request_target' || github.event.inputs.environment == 'local' || github.event_name == 'workflow_dispatch' }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -15,28 +30,23 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
           run_install: false
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Setup test target
+        if: ${{ env.TEST_ENV == 'local' }}
+        run: |
+          git clone https://github.com/takeyaqa/hotel-example-site test-target
+          cd test-target
+          pnpm install
+          pnpm run build
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install chromium --with-deps

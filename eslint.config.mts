@@ -16,6 +16,7 @@ export default [
       'test-results/',
       '.husky/',
       '.github/',
+      'test-target/',
     ],
   },
   {
