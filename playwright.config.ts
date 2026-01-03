@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 // Constants
-const BASE_URL = 'https://hotel-example-site.takeyaqa.dev';
+const BASE_URL = process.env.BASE_URL ?? 'https://hotel-example-site.takeyaqa.dev';
 const DEFAULT_RETRIES = 0;
 const CI_RETRIES = 2;
 const CI_WORKERS = 1;
@@ -33,4 +33,11 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+
+  /* Run your local dev server before starting the tests */
+  webServer: {
+    command: 'cd test-target && pnpm start',
+    port: 8080,
+    reuseExistingServer: !IS_CI,
+  },
 });
