@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import * as planPage from '../pages/plans.page.js';
 import * as reservePage from '../pages/reserve.page.js';
+import { PlanName } from '../pages/types.js';
 
 const beforeSetup = async (page: Readonly<Page>) => {
   await planPage.navigateToPlans(page);
@@ -16,7 +17,7 @@ test.describe('Plans Page', () => {
   test('All plan names are displayed', async ({ page }) => {
     const initializedPage = await beforeSetup(page);
 
-    const assertions = Object.keys(planPage.PLAN_ID_MAP).map((planName) =>
+    const assertions = Object.entries(planPage.PLAN_ID_MAP).map(([planName]) =>
       expect(planPage.getPlanHeading(initializedPage, planName)).toBeVisible(),
     );
 
@@ -36,5 +37,18 @@ test.describe('Plans Page', () => {
     });
 
     await Promise.all(assertions);
+  });
+
+  test('Clicking reserve button navigates to reservation page in a new tab', async ({ page }) => {
+    const initializedPage = await beforeSetup(page);
+    const planName: PlanName = 'お得な特典付きプラン';
+    const planId = planPage.PLAN_ID_MAP[planName];
+    const reserveButton = planPage.getReserveButton(initializedPage, planName);
+
+    const newPagePromise = initializedPage.context().waitForEvent('page');
+    await reserveButton.click();
+    const newPage = await newPagePromise;
+
+    await expect(newPage).toHaveURL(reservePage.getReservePageUrlPattern(planId));
   });
 });
