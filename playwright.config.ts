@@ -35,9 +35,12 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'cd test-target && pnpm start',
-    port: 8080,
-    reuseExistingServer: !IS_CI,
-  },
+  webServer:
+    BASE_URL.includes('localhost') || BASE_URL.includes('127.0.0.1')
+      ? {
+          command: 'cd test-target && pnpm start',
+          port: 8080,
+          reuseExistingServer: !IS_CI,
+        }
+      : undefined,
 });
