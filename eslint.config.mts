@@ -90,6 +90,7 @@ export default [
       // Verify that the swich statement exhausively covers all cases of the union type
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       'unicorn/prefer-switch': 'error',
+      'unicorn/prevent-abbreviations': 'off',
 
       // Restrict global variables
       'no-restricted-globals': [
