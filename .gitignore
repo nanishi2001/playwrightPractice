@@ -10,3 +10,6 @@ playwright/.cache/
 
 # cache
 .eslintcache
+
+# test target
+test-target/
