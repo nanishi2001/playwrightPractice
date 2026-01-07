@@ -90,6 +90,7 @@ export default [
       // Verify that the swich statement exhausively covers all cases of the union type
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       'unicorn/prefer-switch': 'error',
+      'unicorn/prevent-abbreviations': 'off',
 
       // Restrict global variables
       'no-restricted-globals': [
@@ -152,7 +153,7 @@ export default [
   },
   {
     ...playwright.configs['flat/recommended'],
-    files: ['tests/**/*.spec.ts'],
+    files: ['tests/**/*.spec.ts', 'pages/**/*.ts'],
     rules: {
       ...playwright.configs['flat/recommended'].rules,
       'functional/no-expression-statements': [
@@ -161,7 +162,7 @@ export default [
           ignoreCodePattern: [
             '^test',
             '^expect',
-            '^await expect',
+            '^await.*',
             '^.*.goto',
             '^.*.click',
             '^.*.waitFor',
@@ -178,6 +179,8 @@ export default [
             'setGender',
             'setBirthday',
             'setNotification',
+            '^.*.login',
+            '^generateTests',
           ],
         },
       ],
