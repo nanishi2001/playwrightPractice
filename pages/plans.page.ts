@@ -24,11 +24,8 @@ export const navigateToPlans = (page: Readonly<Page>): Promise<unknown> =>
 export const getPlanHeading = (page: Readonly<Page>, planName: string): Locator =>
   page.getByRole('heading', { name: planName, level: 5 });
 
-export const getPlanIndex = (planName: string): number => {
-  const planEntries = Object.keys(PLAN_ID_MAP);
-  const index = planEntries.indexOf(planName);
-  return index === -1 ? 0 : index;
-};
-
 export const getReserveButton = (page: Readonly<Page>, planName: string): Locator =>
-  page.getByRole('link', { name: RESERVE_BUTTON_LABEL }).nth(getPlanIndex(planName));
+  page
+    .getByRole('generic')
+    .filter({ has: getPlanHeading(page, planName) })
+    .getByRole('link', { name: RESERVE_BUTTON_LABEL });
