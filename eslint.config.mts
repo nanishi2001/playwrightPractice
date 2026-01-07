@@ -153,7 +153,7 @@ export default [
   },
   {
     ...playwright.configs['flat/recommended'],
-    files: ['tests/**/*.spec.ts'],
+    files: ['tests/**/*.spec.ts', 'pages/**/*.ts'],
     rules: {
       ...playwright.configs['flat/recommended'].rules,
       'functional/no-expression-statements': [
@@ -162,7 +162,7 @@ export default [
           ignoreCodePattern: [
             '^test',
             '^expect',
-            '^await expect',
+            '^await.*',
             '^.*.goto',
             '^.*.click',
             '^.*.waitFor',
@@ -179,6 +179,8 @@ export default [
             'setGender',
             'setBirthday',
             'setNotification',
+            '^.*.login',
+            '^generateTests',
           ],
         },
       ],

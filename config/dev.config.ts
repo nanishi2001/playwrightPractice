@@ -1,9 +1,9 @@
 import type { userData } from './types.js';
 
-export const developmentData = {
+export const devData = {
   userData: {
-    ichichiro: {
-      email: 'ichichiro@example.com',
+    ichiro: {
+      email: 'ichiro@example.com',
       password: 'password',
     },
     sakura: {
