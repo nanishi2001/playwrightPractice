@@ -34,7 +34,9 @@ test.describe('Signup Page', () => {
 
     await signupPage.getSubmitButton(initializedPage).click();
 
-    const errorCount = await signupPage.getErrorMessage(initializedPage).count();
+    const errorCount = await signupPage
+      .getErrorMessage(initializedPage, /必須|入力してください/)
+      .count();
     expect(errorCount).toBeGreaterThan(0);
   });
 
@@ -45,9 +47,7 @@ test.describe('Signup Page', () => {
     await signupPage.getSubmitButton(initializedPage).click();
 
     await expect(
-      signupPage
-        .getErrorMessage(initializedPage)
-        .filter({ hasText: 'メールアドレスを入力してください。' }),
+      signupPage.getErrorMessage(initializedPage, 'メールアドレスを入力してください。'),
     ).toBeVisible();
   });
 

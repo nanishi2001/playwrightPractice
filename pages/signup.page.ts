@@ -8,35 +8,46 @@ export const SIGNUP_PAGE_TITLE = '会員登録 | HOTEL PLANISPHERE - テスト�
 export const SIGNUP_SUCCESS_TITLE =
   'マイページ | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
 
-export const getEmailInput = (page: Readonly<Page>): Locator => page.getByLabel('メールアドレス');
+export const getEmailInput = (page: Readonly<Page>): Locator =>
+  page.getByRole('textbox', { name: 'メールアドレス' });
 
-export const getPasswordInput = (page: Readonly<Page>): Locator => page.locator('#password');
+export const getPasswordInput = (page: Readonly<Page>): Locator =>
+  page.getByLabel(/^パスワード\s*必須$/);
 
 export const getPasswordConfirmationInput = (page: Readonly<Page>): Locator =>
-  page.locator('#password-confirmation');
+  page.getByLabel('パスワード（確認）');
 
-export const getUsernameInput = (page: Readonly<Page>): Locator => page.getByLabel('氏名');
+export const getUsernameInput = (page: Readonly<Page>): Locator =>
+  page.getByRole('textbox', { name: '氏名' });
 
 export const getRankPremiumRadio = (page: Readonly<Page>): Locator =>
-  page.getByLabel('プレミアム会員');
+  page.getByRole('radio', { name: 'プレミアム会員' });
 
-export const getRankNormalRadio = (page: Readonly<Page>): Locator => page.getByLabel('一般会員');
+export const getRankNormalRadio = (page: Readonly<Page>): Locator =>
+  page.getByRole('radio', { name: '一般会員' });
 
-export const getAddressInput = (page: Readonly<Page>): Locator => page.getByLabel('住所');
+export const getAddressInput = (page: Readonly<Page>): Locator =>
+  page.getByRole('textbox', { name: '住所' });
 
-export const getTelInput = (page: Readonly<Page>): Locator => page.getByLabel('電話番号');
+export const getTelInput = (page: Readonly<Page>): Locator =>
+  page.getByRole('textbox', { name: '電話番号' });
 
-export const getGenderSelect = (page: Readonly<Page>): Locator => page.getByLabel('性別');
+export const getGenderSelect = (page: Readonly<Page>): Locator =>
+  page.getByRole('combobox', { name: '性別' });
 
-export const getBirthdayInput = (page: Readonly<Page>): Locator => page.getByLabel('生年月日');
+export const getBirthdayInput = (page: Readonly<Page>): Locator =>
+  page.getByRole('textbox', { name: '生年月日' });
 
 export const getNotificationCheckbox = (page: Readonly<Page>): Locator =>
-  page.getByLabel('お知らせを受け取る');
+  page.getByRole('checkbox', { name: 'お知らせを受け取る' });
 
 export const getSubmitButton = (page: Readonly<Page>): Locator =>
   page.getByRole('button', { name: '登録' });
 
-export const getErrorMessage = (page: Readonly<Page>): Locator => page.locator('.invalid-feedback');
+export const getErrorMessage = (
+  page: Readonly<Page>,
+  message: Readonly<string | RegExp>,
+): Locator => page.getByText(message);
 
 export const navigateToSignup = (page: Readonly<Page>): Promise<unknown> =>
   page.goto(SIGNUP_PAGE_PATH);
