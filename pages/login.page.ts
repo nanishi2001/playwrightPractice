@@ -12,7 +12,7 @@ export const getPasswordInput = (page: Readonly<Page>): Locator => page.getByLab
 
 export const getSubmitButton = (page: Readonly<Page>): Locator =>
   // eslint-disable-next-line playwright/no-raw-locators
-  page.getByRole('button', { name: 'ログイン' }).and(page.locator('#login-button'));
+  page.locator('#login-button');
 
 export const getEmailErrorMessage = (
   page: Readonly<Page>,

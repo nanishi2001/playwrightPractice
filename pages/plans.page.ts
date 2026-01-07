@@ -25,7 +25,5 @@ export const getPlanHeading = (page: Readonly<Page>, planName: string): Locator 
   page.getByRole('heading', { name: planName, level: 5 });
 
 export const getReserveButton = (page: Readonly<Page>, planName: string): Locator =>
-  page
-    .getByRole('generic')
-    .filter({ has: getPlanHeading(page, planName) })
-    .getByRole('link', { name: RESERVE_BUTTON_LABEL });
+  // eslint-disable-next-line playwright/no-raw-locators
+  getPlanHeading(page, planName).locator('..').getByRole('link', { name: RESERVE_BUTTON_LABEL });
