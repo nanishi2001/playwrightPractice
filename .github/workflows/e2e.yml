@@ -27,6 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
+          # submoduleの履歴が必要な場合は fetch-depth: 0 を検討
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -50,16 +53,14 @@ jobs:
             test-target
             test-target/node_modules
             test-target/dist
-          key: test-target-${{ hashFiles('test-target-version.txt') }}-v2
+          key: test-target-${{ hashFiles('test-target/.git/HEAD') }}-v2
           restore-keys: |
             test-target-
 
       - name: Setup test target
         if: ${{ env.TEST_ENV == 'local' && steps.test-target-cache.outputs.cache-hit != 'true' }}
         run: |
-          git clone https://github.com/takeyaqa/hotel-example-site test-target
           cd test-target
-          git rev-parse HEAD > ../test-target-version.txt
           pnpm install --frozen-lockfile
           pnpm run build
 
