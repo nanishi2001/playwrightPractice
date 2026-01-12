@@ -71,17 +71,11 @@ nvm use 22.21.1
 ### インストール
 
 ```bash
-# クローン（サブモジュールを含める場合）
-git clone --recursive https://github.com/nanishi2001/playwrightPractice.git
+# クローン
+git clone https://github.com/nanishi2001/playwrightPractice.git
 
-# すでにクローン済みの場合は
-git submodule update --init --recursive
-
-# 依存パッケージのインストール
+# 依存パッケージのインストール（サブモジュールの初期化も自動で行われます）
 pnpm install
-
-# Husky フックの設定
-pnpm prepare
 ```
 
 ## 🧪 テスト実行
