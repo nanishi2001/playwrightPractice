@@ -1,4 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
+import { config } from '../config/index.js';
+import { ERROR_EMAIL_INVALID } from '../pages/locators.js';
 import * as signupPage from '../pages/signup.page.js';
 
 const beforeSetup = async (page: Readonly<Page>) => {
@@ -46,9 +48,7 @@ test.describe('Signup Page', () => {
     await signupPage.setEmail(initializedPage, 'invalidemail');
     await signupPage.getSubmitButton(initializedPage).click();
 
-    await expect(
-      signupPage.getErrorMessage(initializedPage, 'メールアドレスを入力してください。'),
-    ).toBeVisible();
+    await expect(signupPage.getErrorMessage(initializedPage, ERROR_EMAIL_INVALID)).toBeVisible();
   });
 
   test('Successfully registers a user', async ({ page }) => {
@@ -59,14 +59,14 @@ test.describe('Signup Page', () => {
 
     await signupPage.fillSignupForm(initializedPage, {
       email,
-      password: 'password123',
-      passwordConfirmation: 'password123',
-      username: 'テスト太郎',
+      password: config.testData.signupPassword,
+      passwordConfirmation: config.testData.signupPassword,
+      username: config.testData.signupUsername,
       rank: 'normal',
-      address: '東京都新宿区',
-      tel: '09012345678',
-      gender: '男性',
-      birthday: '2000-01-01',
+      address: config.testData.signupAddress,
+      tel: config.testData.signupTel,
+      gender: config.testData.signupGender,
+      birthday: config.testData.signupBirthday,
       notification: true,
     });
 

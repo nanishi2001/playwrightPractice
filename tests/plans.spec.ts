@@ -1,7 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
+import { PLAN_TOKUTEN } from '../pages/locators.js';
 import * as planPage from '../pages/plans.page.js';
 import * as reservePage from '../pages/reserve.page.js';
-import { PlanName } from '../pages/types.js';
+import type { PlanName } from '../pages/types.js';
 
 const beforeSetup = async (page: Readonly<Page>) => {
   await planPage.navigateToPlans(page);
@@ -41,7 +42,7 @@ test.describe('Plans Page', () => {
 
   test('Clicking reserve button navigates to reservation page in a new tab', async ({ page }) => {
     const initializedPage = await beforeSetup(page);
-    const planName: PlanName = 'お得な特典付きプラン';
+    const planName: PlanName = PLAN_TOKUTEN;
     const planId = planPage.PLAN_ID_MAP[planName];
     const reserveButton = planPage.getReserveButton(initializedPage, planName);
 
