@@ -24,17 +24,17 @@ const beforeSetup = async (page: Readonly<Page>, planId: number) => {
 const getSafeTextContent = async (locator: Readonly<Locator>): Promise<string> =>
   (await locator.textContent()) ?? '';
 
-test.describe('宿泊予約 (Reserve Page)', () => {
+test.describe('Reservation (Reserve Page)', () => {
   const planName = 'お得な特典付きプラン';
   const planId = PLAN_ID_MAP[planName];
 
-  test('初期表示が正しいこと', async ({ page }) => {
+  test('should display correct initial state', async ({ page }) => {
     const initializedPage = await beforeSetup(page, planId);
 
     await expect(initializedPage).toHaveTitle(RESERVE_PAGE_TITLE);
     await expect(getPlanTitle(initializedPage)).toHaveText(planName);
 
-    // フォーム要素の存在確認
+    // Verify presence of form elements
     await expect(getDateInput(initializedPage)).toBeVisible();
     await expect(getNightsInput(initializedPage)).toBeVisible();
     await expect(getHeadcountInput(initializedPage)).toBeVisible();
@@ -44,30 +44,32 @@ test.describe('宿泊予約 (Reserve Page)', () => {
     await expect(getSubmitButton(initializedPage)).toBeVisible();
   });
 
-  test('宿泊数や人数を変更した際、合計金額が動的に再計算されること', async ({ page }) => {
+  test('should dynamically recalculate total price when nights or headcount change', async ({
+    page,
+  }) => {
     const initializedPage = await beforeSetup(page, planId);
     const initialPrice = await getSafeTextContent(getTotalPriceStatus(initializedPage));
 
-    // 宿泊数を変更
+    // Change number of nights
     await getNightsInput(initializedPage).fill('2');
-    await getPlanTitle(initializedPage).click(); // blur を誘発
+    await getPlanTitle(initializedPage).click(); // Trigger blur
     await expect(getTotalPriceStatus(initializedPage)).not.toHaveText(initialPrice);
     const priceAfterNightsChange = await getSafeTextContent(getTotalPriceStatus(initializedPage));
 
-    // 人数を変更
+    // Change headcount
     await getHeadcountInput(initializedPage).fill('2');
-    await getPlanTitle(initializedPage).click(); // blur を誘発
+    await getPlanTitle(initializedPage).click(); // Trigger blur
     await expect(getTotalPriceStatus(initializedPage)).not.toHaveText(priceAfterNightsChange);
     const priceAfterHeadcountChange = await getSafeTextContent(
       getTotalPriceStatus(initializedPage),
     );
 
-    // 追加プランを選択
+    // Check additional plan
     await getBreakfastCheckbox(initializedPage).check();
     await expect(getTotalPriceStatus(initializedPage)).not.toHaveText(priceAfterHeadcountChange);
   });
 
-  test('「予約内容を確認する」ボタンを押下すると、確認画面へ遷移すること', async ({ page }) => {
+  test('should navigate to confirm page when submit button is clicked', async ({ page }) => {
     const initializedPage = await beforeSetup(page, planId);
 
     await getUsernameInput(initializedPage).fill('テスト太郎');
