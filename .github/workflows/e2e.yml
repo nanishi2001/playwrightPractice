@@ -43,6 +43,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Get submodule commit hash
+        if: ${{ env.TEST_ENV == 'local' }}
+        id: submodule-hash
+        run: echo "hash=$(git submodule status test-target | awk '{print $1}')" >> $GITHUB_OUTPUT
+
       - name: Cache test target
         if: ${{ env.TEST_ENV == 'local' }}
         id: test-target-cache
