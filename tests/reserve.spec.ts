@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { config } from '../config/index.js';
 import { CONTACT_NONE, PLAN_TOKUTEN } from '../pages/locators.js';
 import { PLAN_ID_MAP } from '../pages/plans.page.js';
@@ -17,14 +17,12 @@ import {
   getUsernameInput,
   RESERVE_PAGE_TITLE,
 } from '../pages/reserve.page.js';
+import { getSafeTextContent } from '../utils/utils.js';
 
 const beforeSetup = async (page: Readonly<Page>, planId: number) => {
   await page.goto(getReservePageUrlPattern(planId));
   return page;
 };
-
-const getSafeTextContent = async (locator: Readonly<Locator>): Promise<string> =>
-  (await locator.textContent()) ?? '';
 
 test.describe('Reservation (Reserve Page)', () => {
   const planName = PLAN_TOKUTEN;
