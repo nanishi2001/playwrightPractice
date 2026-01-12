@@ -1,43 +1,49 @@
 import type { userData } from './types.js';
 
+/**
+ * Helper function to safely get environment variable with fallback
+ */
+const getEnv = (key: string, fallback = ''): string => process.env[key] ?? fallback;
+
 export const localData = {
   userData: {
     ichiro: {
-      email: 'ichiro@example.com',
-      password: 'password',
-      name: '山田一郎',
-      rank: 'プレミアム会員',
-      address: '東京都豊島区池袋',
-      tel: '01234567891',
-      gender: '男性',
-      birthday: '未登録',
-      notification: '受け取る',
+      email: getEnv('USER_EMAIL_ICHIRO'),
+      password: getEnv('USER_PASSWORD_ICHIRO'),
+      name: getEnv('USER_NAME_ICHIRO'),
+      rank: getEnv('USER_RANK_ICHIRO'),
+      address: getEnv('USER_ADDRESS_ICHIRO'),
+      tel: getEnv('USER_TEL_ICHIRO'),
+      gender: getEnv('USER_GENDER_ICHIRO'),
+      birthday: getEnv('USER_BIRTHDAY_ICHIRO'),
+      notification: getEnv('USER_NOTIFICATION_ICHIRO'),
     },
     sakura: {
-      email: 'sakura@example.com',
-      password: 'pass1234',
+      email: getEnv('USER_EMAIL_SAKURA'),
+      password: getEnv('USER_PASSWORD_SAKURA'),
     },
     jun: {
-      email: 'jun@example.com',
-      password: 'pa55w0rd!',
+      email: getEnv('USER_EMAIL_JUN'),
+      password: getEnv('USER_PASSWORD_JUN'),
     },
     yoshiki: {
-      email: 'yoshiki@example.com',
-      password: 'pass-pass',
+      email: getEnv('USER_EMAIL_YOSHIKI'),
+      password: getEnv('USER_PASSWORD_YOSHIKI'),
     },
   },
   invalidCredentials: {
-    email: 'invalid@example.com',
-    password: 'wrongpassword',
+    email: getEnv('INVALID_EMAIL'),
+    password: getEnv('INVALID_PASSWORD'),
   },
   testData: {
-    reserveUsername: 'テスト太郎',
-    signupUsername: 'テスト太郎',
-    signupPassword: 'password123',
-    signupAddress: '東京都新宿区',
-    signupTel: '09012345678',
-    signupGender: '男性',
-    signupBirthday: '2000-01-01',
+    reserveUsername: getEnv('TEST_RESERVE_USERNAME'),
+    signupUsername: getEnv('TEST_SIGNUP_USERNAME'),
+    signupPassword: getEnv('TEST_SIGNUP_PASSWORD'),
+    signupRank: getEnv('TEST_SIGNUP_RANK') as 'premium' | 'normal',
+    signupAddress: getEnv('TEST_SIGNUP_ADDRESS'),
+    signupTel: getEnv('TEST_SIGNUP_TEL'),
+    signupGender: getEnv('TEST_SIGNUP_GENDER') as '男性' | '女性' | 'その他' | '未回答',
+    signupBirthday: getEnv('TEST_SIGNUP_BIRTHDAY'),
   },
 } as const satisfies {
   readonly userData: Record<string, userData>;
@@ -46,9 +52,10 @@ export const localData = {
     readonly reserveUsername: string;
     readonly signupUsername: string;
     readonly signupPassword: string;
+    readonly signupRank: 'premium' | 'normal';
     readonly signupAddress: string;
     readonly signupTel: string;
-    readonly signupGender: string;
+    readonly signupGender: '男性' | '女性' | 'その他' | '未回答';
     readonly signupBirthday: string;
   };
 };
