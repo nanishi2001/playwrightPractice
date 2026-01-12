@@ -26,4 +26,11 @@ export const devData = {
       password: 'pass-pass',
     },
   },
-} as const satisfies { readonly userData: Record<string, userData> };
+  invalidCredentials: {
+    email: 'invalid@example.com',
+    password: 'wrongpassword',
+  },
+} as const satisfies {
+  readonly userData: Record<string, userData>;
+  readonly invalidCredentials: userData;
+};

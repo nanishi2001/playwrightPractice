@@ -2,7 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { LABEL_EMAIL, LABEL_PASSWORD } from './locators.js';
 
 export const LOGIN_PAGE_PATH = '/ja/login.html' as const;
-export const LOGIN_PAGE_TITLE = 'ログイン | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export { TITLE_LOGIN as LOGIN_PAGE_TITLE } from './locators.js';
 
 export const navigateToLogin = (page: Readonly<Page>): Promise<unknown> =>
   page.goto(LOGIN_PAGE_PATH);

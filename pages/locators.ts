@@ -4,6 +4,17 @@
  */
 
 // =============================================================================
+// Page Titles
+// =============================================================================
+export const TITLE_HOME = 'HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export const TITLE_LOGIN = 'ログイン | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export const TITLE_SIGNUP = '会員登録 | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export const TITLE_MYPAGE = 'マイページ | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export const TITLE_PLANS = '宿泊プラン一覧 | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export const TITLE_RESERVE = '宿泊予約 | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export const TITLE_CONFIRM = '宿泊予約確認 | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+
+// =============================================================================
 // Navigation
 // =============================================================================
 export const NAV_HOME = 'ホーム' as const;
@@ -11,6 +22,18 @@ export const NAV_PLANS = '宿泊予約' as const;
 export const NAV_SIGNUP = '会員登録' as const;
 export const NAV_LOGIN = 'ログイン' as const;
 export const NAV_LOGOUT = 'ログアウト' as const;
+
+// =============================================================================
+// Plan Names
+// =============================================================================
+export const PLAN_TOKUTEN = 'お得な特典付きプラン' as const;
+export const PLAN_SUDOMARI = '素泊まり' as const;
+export const PLAN_BUSINESS = '出張ビジネスプラン' as const;
+export const PLAN_ESTHE = 'エステ・マッサージプラン' as const;
+export const PLAN_ROTENBURO = '貸し切り露天風呂プラン' as const;
+export const PLAN_COUPLE = 'カップル限定プラン' as const;
+export const PLAN_THEMEPARK = 'テーマパーク優待プラン' as const;
+export const RESERVE_BUTTON = 'このプランで予約' as const;
 
 // =============================================================================
 // Form Labels - Common

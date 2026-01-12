@@ -15,9 +15,10 @@ import {
 export const RESERVE_PAGE_PATH = '/ja/reserve.html' as const;
 export const RESERVE_PAGE_URL = './reserve.html' as const;
 
-export const RESERVE_PAGE_TITLE = '宿泊予約 | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
-export const CONFIRM_PAGE_TITLE =
-  '宿泊予約確認 | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export {
+  TITLE_CONFIRM as CONFIRM_PAGE_TITLE,
+  TITLE_RESERVE as RESERVE_PAGE_TITLE,
+} from './locators.js';
 
 export const getReserveUrlWithPlanId = (planId: number): string =>
   `${RESERVE_PAGE_URL}?plan-id=${planId}`;
