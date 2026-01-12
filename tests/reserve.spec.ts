@@ -19,65 +19,82 @@ import {
 } from '../pages/reserve.page.js';
 import { getSafeTextContent } from '../utils/utils.js';
 
-const beforeSetup = async (page: Readonly<Page>, planId: number) => {
+/**
+ * Navigate to the reservation page for a specific plan.
+ * @param page - Playwright page instance
+ * @param planId - Plan ID to navigate to
+ */
+const navigateToReservePage = async (page: Readonly<Page>, planId: number): Promise<void> => {
   await page.goto(getReservePageUrlPattern(planId));
-  return page;
+};
+
+/**
+ * Safely retrieves the plan ID with runtime validation.
+ * @param planName - The plan name to look up
+ * @returns The plan ID
+ * @throws Error if the plan name is not found
+ */
+const getPlanId = (planName: keyof typeof PLAN_ID_MAP): number => {
+  const planId = PLAN_ID_MAP[planName];
+  if (planId === undefined) {
+    // eslint-disable-next-line functional/no-throw-statements -- Runtime validation for test configuration
+    throw new Error(`Unknown plan name: ${planName}`);
+  }
+  return planId;
 };
 
 test.describe('Reservation (Reserve Page)', () => {
   const planName = PLAN_TOKUTEN;
-  const planId = PLAN_ID_MAP[planName];
+  const planId = getPlanId(planName);
 
   test('should display correct initial state', async ({ page }) => {
-    const initializedPage = await beforeSetup(page, planId);
+    await navigateToReservePage(page, planId);
 
-    await expect(initializedPage).toHaveTitle(RESERVE_PAGE_TITLE);
-    await expect(getPlanTitle(initializedPage)).toHaveText(planName);
+    await expect(page).toHaveTitle(RESERVE_PAGE_TITLE);
+    await expect(getPlanTitle(page)).toHaveText(planName);
 
     // Verify presence of form elements
-    await expect(getDateInput(initializedPage)).toBeVisible();
-    await expect(getNightsInput(initializedPage)).toBeVisible();
-    await expect(getHeadcountInput(initializedPage)).toBeVisible();
-    await expect(getUsernameInput(initializedPage)).toBeVisible();
-    await expect(getContactSelect(initializedPage)).toBeVisible();
-    await expect(getCommentInput(initializedPage)).toBeVisible();
-    await expect(getSubmitButton(initializedPage)).toBeVisible();
+    await expect(getDateInput(page)).toBeVisible();
+    await expect(getNightsInput(page)).toBeVisible();
+    await expect(getHeadcountInput(page)).toBeVisible();
+    await expect(getUsernameInput(page)).toBeVisible();
+    await expect(getContactSelect(page)).toBeVisible();
+    await expect(getCommentInput(page)).toBeVisible();
+    await expect(getSubmitButton(page)).toBeVisible();
   });
 
   test('should dynamically recalculate total price when nights or headcount change', async ({
     page,
   }) => {
-    const initializedPage = await beforeSetup(page, planId);
-    const initialPrice = await getSafeTextContent(getTotalPriceStatus(initializedPage));
+    await navigateToReservePage(page, planId);
+    const initialPrice = await getSafeTextContent(getTotalPriceStatus(page));
 
     // Change number of nights
-    await getNightsInput(initializedPage).fill('2');
-    await getPlanTitle(initializedPage).click(); // Trigger blur
-    await expect(getTotalPriceStatus(initializedPage)).not.toHaveText(initialPrice);
-    const priceAfterNightsChange = await getSafeTextContent(getTotalPriceStatus(initializedPage));
+    await getNightsInput(page).fill('2');
+    await getNightsInput(page).blur();
+    await expect(getTotalPriceStatus(page)).not.toHaveText(initialPrice);
+    const priceAfterNightsChange = await getSafeTextContent(getTotalPriceStatus(page));
 
     // Change headcount
-    await getHeadcountInput(initializedPage).fill('2');
-    await getPlanTitle(initializedPage).click(); // Trigger blur
-    await expect(getTotalPriceStatus(initializedPage)).not.toHaveText(priceAfterNightsChange);
-    const priceAfterHeadcountChange = await getSafeTextContent(
-      getTotalPriceStatus(initializedPage),
-    );
+    await getHeadcountInput(page).fill('2');
+    await getHeadcountInput(page).blur();
+    await expect(getTotalPriceStatus(page)).not.toHaveText(priceAfterNightsChange);
+    const priceAfterHeadcountChange = await getSafeTextContent(getTotalPriceStatus(page));
 
     // Check additional plan
-    await getBreakfastCheckbox(initializedPage).check();
-    await expect(getTotalPriceStatus(initializedPage)).not.toHaveText(priceAfterHeadcountChange);
+    await getBreakfastCheckbox(page).check();
+    await expect(getTotalPriceStatus(page)).not.toHaveText(priceAfterHeadcountChange);
   });
 
   test('should navigate to confirm page when submit button is clicked', async ({ page }) => {
-    const initializedPage = await beforeSetup(page, planId);
+    await navigateToReservePage(page, planId);
 
-    await getUsernameInput(initializedPage).fill(config.testData.reserveUsername);
-    await getContactSelect(initializedPage).selectOption(CONTACT_NONE);
+    await getUsernameInput(page).fill(config.testData.reserveUsername);
+    await getContactSelect(page).selectOption(CONTACT_NONE);
 
-    await getSubmitButton(initializedPage).click();
+    await getSubmitButton(page).click();
 
-    await expect(initializedPage).toHaveURL(/.*confirm.html/);
-    await expect(initializedPage).toHaveTitle(CONFIRM_PAGE_TITLE);
+    await expect(page).toHaveURL(/.*confirm.html/);
+    await expect(page).toHaveTitle(CONFIRM_PAGE_TITLE);
   });
 });
