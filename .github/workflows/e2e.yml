@@ -88,7 +88,8 @@ jobs:
 
       - name: Run Playwright tests
         env:
-          DOTENV_PRIVATE_KEY: ${{ secrets.ENV_KEY }}
+          DOTENV_PRIVATE_KEY_LOCAL: ${{ secrets.ENV_KEY }}
+          DOTENV_PRIVATE_KEY_DEV: ${{ secrets.ENV_KEY }}
         run: |
           if [ "$TEST_ENV" = "dev" ]; then
             pnpm test:dev
