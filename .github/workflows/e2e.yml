@@ -57,7 +57,7 @@ jobs:
             test-target
             test-target/node_modules
             test-target/dist
-          key: test-target-${{ hashFiles('test-target/.git/HEAD') }}-v2
+          key: test-target-${{ steps.submodule-hash.outputs.hash }}-v2
           restore-keys: |
             test-target-
 
