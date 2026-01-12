@@ -29,7 +29,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-          # submoduleの履歴が必要な場合は fetch-depth: 0 を検討
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
