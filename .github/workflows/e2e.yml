@@ -41,7 +41,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # テストターゲットのキャッシュ (ビルド済みを含む)
       - name: Cache test target
         if: ${{ env.TEST_ENV == 'local' }}
         id: test-target-cache
