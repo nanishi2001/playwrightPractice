@@ -30,7 +30,25 @@ export const devData = {
     email: 'invalid@example.com',
     password: 'wrongpassword',
   },
+  testData: {
+    reserveUsername: 'テスト太郎',
+    signupUsername: 'テスト太郎',
+    signupPassword: 'password123',
+    signupAddress: '東京都新宿区',
+    signupTel: '09012345678',
+    signupGender: '男性',
+    signupBirthday: '2000-01-01',
+  },
 } as const satisfies {
   readonly userData: Record<string, userData>;
   readonly invalidCredentials: userData;
+  readonly testData: {
+    readonly reserveUsername: string;
+    readonly signupUsername: string;
+    readonly signupPassword: string;
+    readonly signupAddress: string;
+    readonly signupTel: string;
+    readonly signupGender: string;
+    readonly signupBirthday: string;
+  };
 };

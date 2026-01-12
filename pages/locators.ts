@@ -81,3 +81,18 @@ export const LABEL_RANK = '会員ランク' as const;
 export const LABEL_NOTIFICATION_STATUS = 'お知らせ' as const;
 export const BUTTON_ICON_SETTINGS = 'アイコン設定' as const;
 export const BUTTON_DELETE_ACCOUNT = '退会する' as const;
+
+// =============================================================================
+// Footer
+// =============================================================================
+export const FOOTER_GITHUB = 'GitHub' as const;
+
+// =============================================================================
+// Reserve Contact Options
+// =============================================================================
+export const CONTACT_NONE = '希望しない' as const;
+
+// =============================================================================
+// Error Messages
+// =============================================================================
+export const ERROR_EMAIL_INVALID = 'メールアドレスを入力してください。' as const;

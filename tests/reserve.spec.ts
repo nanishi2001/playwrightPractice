@@ -1,4 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { config } from '../config/index.js';
+import { CONTACT_NONE, PLAN_TOKUTEN } from '../pages/locators.js';
 import { PLAN_ID_MAP } from '../pages/plans.page.js';
 import {
   CONFIRM_PAGE_TITLE,
@@ -25,7 +27,7 @@ const getSafeTextContent = async (locator: Readonly<Locator>): Promise<string> =
   (await locator.textContent()) ?? '';
 
 test.describe('Reservation (Reserve Page)', () => {
-  const planName = 'お得な特典付きプラン';
+  const planName = PLAN_TOKUTEN;
   const planId = PLAN_ID_MAP[planName];
 
   test('should display correct initial state', async ({ page }) => {
@@ -72,8 +74,8 @@ test.describe('Reservation (Reserve Page)', () => {
   test('should navigate to confirm page when submit button is clicked', async ({ page }) => {
     const initializedPage = await beforeSetup(page, planId);
 
-    await getUsernameInput(initializedPage).fill('テスト太郎');
-    await getContactSelect(initializedPage).selectOption('希望しない');
+    await getUsernameInput(initializedPage).fill(config.testData.reserveUsername);
+    await getContactSelect(initializedPage).selectOption(CONTACT_NONE);
 
     await getSubmitButton(initializedPage).click();
 
