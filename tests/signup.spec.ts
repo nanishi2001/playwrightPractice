@@ -4,7 +4,7 @@ import { ERROR_EMAIL_INVALID } from '../pages/locators.js';
 import * as signupPage from '../pages/signup.page.js';
 
 const beforeSetup = async (page: Readonly<Page>) => {
-  await (async () => signupPage.navigateToSignup(page))();
+  await signupPage.navigateToSignup(page);
   return page;
 };
 
