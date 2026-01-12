@@ -62,7 +62,7 @@ test.describe('Signup Page', () => {
       password: config.testData.signupPassword,
       passwordConfirmation: config.testData.signupPassword,
       username: config.testData.signupUsername,
-      rank: 'normal',
+      rank: config.testData.signupRank,
       address: config.testData.signupAddress,
       tel: config.testData.signupTel,
       gender: config.testData.signupGender,

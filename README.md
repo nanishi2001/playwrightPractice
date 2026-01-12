@@ -78,47 +78,65 @@ git clone https://github.com/nanishi2001/playwrightPractice.git
 pnpm install
 ```
 
+### 環境変数のセットアップ
+
+このプロジェクトは[dotenvx](https://github.com/dotenvx/dotenvx)で機密情報を暗号化しています。
+
+#### 新規利用者向け
+
+`config/.env.example`をコピーして環境ファイルを作成し、値を入力してから暗号化してください：
+
+```bash
+# ローカル環境用
+cp config/.env.example config/.env.local
+# 値を編集後、暗号化
+pnpm exec dotenvx encrypt -f config/.env.local
+
+# dev環境用（必要な場合）
+cp config/.env.example config/.env.dev
+pnpm exec dotenvx encrypt -f config/.env.dev
+```
+
+> [!IMPORTANT]
+> `config/.env.keys`に含まれる秘密鍵は絶対にコミットしないでください。
+
+#### GitHub Actionsのセットアップ
+
+CIでテストを実行するには、Environment Secretsを設定してください：
+
+1. リポジトリの Settings → Environments
+2. `local`と`dev`のEnvironmentを作成
+3. 各Environmentに対応する秘密鍵をSecretとして追加：
+   - local: `DOTENV_PRIVATE_KEY_LOCAL`
+   - dev: `DOTENV_PRIVATE_KEY_DEV`
+
 ## 🧪 テスト実行
 
 ```bash
-# すべてのテストを実行
-pnpm test
+# ローカル環境でテスト実行
+pnpm test:local
 
-# UIモードでテストを実行（対話的な実行）
-pnpm test:ui
+# dev環境でテスト実行（リモートサーバー対象）
+pnpm test:dev
 
-# デバッグモードでテストを実行
-pnpm test:debug
+# UIモードでテスト実行
+pnpm test:ui:local
+pnpm test:ui:dev
+
+# デバッグモードでテスト実行
+pnpm test:debug:local
+pnpm test:debug:dev
 
 # テストコードを自動生成
 pnpm codegen
 ```
 
-### ローカル環境でのテスト実行
+### ローカル環境について
 
-ローカルにアプリケーションサーバーを起動してテストを実行することができます。
-テストを実行する前に、テスト対象（サブモジュール）のセットアップが必要です。
+`pnpm test:local`を実行すると、Playwrightの`webServer`機能により`test-target`内のサーバーが自動起動します。
 
-1. **テスト対象のセットアップ** (初回のみ、またはサブモジュール更新時)
-
-   ```bash
-   # サブモジュールのディレクトリへ移動
-   cd test-target
-   # 依存パッケージをインストール
-   pnpm install
-   # アプリケーションをビルド
-   pnpm run build
-   # 元のディレクトリへ戻る
-   cd ..
-   ```
-
-2. **テストの実行**
-   ```bash
-   pnpm test:local
-   ```
-
-> [!NOTE]  
-> `pnpm test:local` を実行すると、Playwright の `webServer` 機能により、自動的に `test-target` 内のサーバーが起動し、テスト完了後に停止します。手動でサーバーを起動しておく必要はありません。
+> [!NOTE]
+> `pnpm install`実行時にサブモジュールのセットアップも自動で行われます。
 
 ## 🔍 コード品質
 

@@ -10,3 +10,6 @@ playwright/.cache/
 
 # cache
 .eslintcache
+
+# dotenvx
+config/.env.keys
