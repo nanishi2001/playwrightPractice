@@ -5,6 +5,13 @@ export const localData = {
     ichiro: {
       email: 'ichiro@example.com',
       password: 'password',
+      name: '山田一郎',
+      rank: 'プレミアム会員',
+      address: '東京都豊島区池袋',
+      tel: '01234567891',
+      gender: '男性',
+      birthday: '未登録',
+      notification: '受け取る',
     },
     sakura: {
       email: 'sakura@example.com',
