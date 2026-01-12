@@ -71,11 +71,11 @@ nvm use 22.21.1
 ### インストール
 
 ```bash
-# 依存パッケージのインストール
-pnpm install
+# クローン
+git clone https://github.com/nanishi2001/playwrightPractice.git
 
-# Husky フックの設定
-pnpm prepare
+# 依存パッケージのインストール（サブモジュールの初期化も自動で行われます）
+pnpm install
 ```
 
 ## 🧪 テスト実行
@@ -97,14 +97,18 @@ pnpm codegen
 ### ローカル環境でのテスト実行
 
 ローカルにアプリケーションサーバーを起動してテストを実行することができます。
+テストを実行する前に、テスト対象（サブモジュール）のセットアップが必要です。
 
-1. **テスト対象のセットアップ** (初回のみ)
+1. **テスト対象のセットアップ** (初回のみ、またはサブモジュール更新時)
 
    ```bash
-   git clone https://github.com/takeyaqa/hotel-example-site test-target
+   # サブモジュールのディレクトリへ移動
    cd test-target
+   # 依存パッケージをインストール
    pnpm install
+   # アプリケーションをビルド
    pnpm run build
+   # 元のディレクトリへ戻る
    cd ..
    ```
 

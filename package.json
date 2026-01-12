@@ -21,7 +21,8 @@
     "test:local": "TEST_ENV=local playwright test",
     "lint": "eslint --cache --fix .",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "git submodule update --init --recursive"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
