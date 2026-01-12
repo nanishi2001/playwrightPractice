@@ -1,4 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
+import { LABEL_EMAIL, LABEL_PASSWORD } from './locators.js';
 
 export const LOGIN_PAGE_PATH = '/ja/login.html' as const;
 export const LOGIN_PAGE_TITLE = 'ログイン | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
@@ -6,9 +7,9 @@ export const LOGIN_PAGE_TITLE = 'ログイン | HOTEL PLANISPHERE - テスト自
 export const navigateToLogin = (page: Readonly<Page>): Promise<unknown> =>
   page.goto(LOGIN_PAGE_PATH);
 
-export const getEmailInput = (page: Readonly<Page>): Locator => page.getByLabel('メールアドレス');
+export const getEmailInput = (page: Readonly<Page>): Locator => page.getByLabel(LABEL_EMAIL);
 
-export const getPasswordInput = (page: Readonly<Page>): Locator => page.getByLabel('パスワード');
+export const getPasswordInput = (page: Readonly<Page>): Locator => page.getByLabel(LABEL_PASSWORD);
 
 export const getSubmitButton = (page: Readonly<Page>): Locator =>
   // eslint-disable-next-line playwright/no-raw-locators

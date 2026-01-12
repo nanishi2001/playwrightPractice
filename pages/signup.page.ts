@@ -1,4 +1,18 @@
 import type { Locator, Page } from '@playwright/test';
+import {
+  LABEL_ADDRESS,
+  LABEL_BIRTHDAY,
+  LABEL_EMAIL,
+  LABEL_GENDER,
+  LABEL_NOTIFICATION,
+  LABEL_PASSWORD_CONFIRM,
+  LABEL_PASSWORD_REQUIRED,
+  LABEL_RANK_NORMAL,
+  LABEL_RANK_PREMIUM,
+  LABEL_SUBMIT_REGISTER,
+  LABEL_TEL,
+  LABEL_USERNAME,
+} from './locators.js';
 import type { SignupFormValues } from './types.js';
 export type { PlanIdMap, PlanName, SignupFormValues } from './types.js';
 
@@ -9,40 +23,40 @@ export const SIGNUP_SUCCESS_TITLE =
   'マイページ | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
 
 export const getEmailInput = (page: Readonly<Page>): Locator =>
-  page.getByRole('textbox', { name: 'メールアドレス' });
+  page.getByRole('textbox', { name: LABEL_EMAIL });
 
 export const getPasswordInput = (page: Readonly<Page>): Locator =>
-  page.getByLabel(/^パスワード\s*必須$/);
+  page.getByLabel(LABEL_PASSWORD_REQUIRED);
 
 export const getPasswordConfirmationInput = (page: Readonly<Page>): Locator =>
-  page.getByLabel('パスワード（確認）');
+  page.getByLabel(LABEL_PASSWORD_CONFIRM);
 
 export const getUsernameInput = (page: Readonly<Page>): Locator =>
-  page.getByRole('textbox', { name: '氏名' });
+  page.getByRole('textbox', { name: LABEL_USERNAME });
 
 export const getRankPremiumRadio = (page: Readonly<Page>): Locator =>
-  page.getByRole('radio', { name: 'プレミアム会員' });
+  page.getByRole('radio', { name: LABEL_RANK_PREMIUM });
 
 export const getRankNormalRadio = (page: Readonly<Page>): Locator =>
-  page.getByRole('radio', { name: '一般会員' });
+  page.getByRole('radio', { name: LABEL_RANK_NORMAL });
 
 export const getAddressInput = (page: Readonly<Page>): Locator =>
-  page.getByRole('textbox', { name: '住所' });
+  page.getByRole('textbox', { name: LABEL_ADDRESS });
 
 export const getTelInput = (page: Readonly<Page>): Locator =>
-  page.getByRole('textbox', { name: '電話番号' });
+  page.getByRole('textbox', { name: LABEL_TEL });
 
 export const getGenderSelect = (page: Readonly<Page>): Locator =>
-  page.getByRole('combobox', { name: '性別' });
+  page.getByRole('combobox', { name: LABEL_GENDER });
 
 export const getBirthdayInput = (page: Readonly<Page>): Locator =>
-  page.getByRole('textbox', { name: '生年月日' });
+  page.getByRole('textbox', { name: LABEL_BIRTHDAY });
 
 export const getNotificationCheckbox = (page: Readonly<Page>): Locator =>
-  page.getByRole('checkbox', { name: 'お知らせを受け取る' });
+  page.getByRole('checkbox', { name: LABEL_NOTIFICATION });
 
 export const getSubmitButton = (page: Readonly<Page>): Locator =>
-  page.getByRole('button', { name: '登録' });
+  page.getByRole('button', { name: LABEL_SUBMIT_REGISTER });
 
 export const getErrorMessage = (
   page: Readonly<Page>,

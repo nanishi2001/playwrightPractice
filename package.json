@@ -22,7 +22,8 @@
     "lint": "eslint --cache --fix .",
     "format": "prettier --write .",
     "prepare": "husky",
-    "postinstall": "git submodule update --init --recursive"
+    "preinstall": "git submodule update --init --recursive",
+    "postinstall": "cd test-target && pnpm install && pnpm run build"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

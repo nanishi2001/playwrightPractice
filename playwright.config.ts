@@ -57,7 +57,7 @@ export default defineConfig({
   webServer:
     TEST_ENV === 'local'
       ? {
-          command: 'cd test-target && pnpm install && pnpm run build && pnpm start',
+          command: 'cd test-target && pnpm start',
           port: 8080,
           reuseExistingServer: !IS_CI,
           timeout: 120_000,
