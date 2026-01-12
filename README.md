@@ -71,6 +71,12 @@ nvm use 22.21.1
 ### インストール
 
 ```bash
+# クローン（サブモジュールを含める場合）
+git clone --recursive https://github.com/nanishi2001/playwrightPractice.git
+
+# すでにクローン済みの場合は
+git submodule update --init --recursive
+
 # 依存パッケージのインストール
 pnpm install
 
@@ -101,7 +107,6 @@ pnpm codegen
 1. **テスト対象のセットアップ** (初回のみ)
 
    ```bash
-   git clone https://github.com/takeyaqa/hotel-example-site test-target
    cd test-target
    pnpm install
    pnpm run build
