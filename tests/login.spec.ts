@@ -48,7 +48,11 @@ test.describe('Login Page', () => {
   test('Shows error message with invalid credentials', async ({ page }) => {
     const initializedPage = await beforeSetup(page);
 
-    await loginPage.login(initializedPage, 'invalid@example.com', 'wrongpassword');
+    await loginPage.login(
+      initializedPage,
+      config.invalidCredentials.email,
+      config.invalidCredentials.password,
+    );
 
     await expect(
       loginPage.getEmailErrorMessage(initializedPage, LOGIN_INVALID_ERROR_MESSAGE),

@@ -14,7 +14,7 @@ import {
 } from './locators.js';
 
 export const MYPAGE_PAGE_PATH = '/ja/mypage.html' as const;
-export const MYPAGE_PAGE_TITLE = 'マイページ | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export { TITLE_MYPAGE as MYPAGE_PAGE_TITLE } from './locators.js';
 
 export const navigateToMyPage = (page: Readonly<Page>): Promise<unknown> =>
   page.goto(MYPAGE_PAGE_PATH);

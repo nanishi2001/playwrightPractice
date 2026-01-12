@@ -14,13 +14,12 @@ import {
   LABEL_USERNAME,
 } from './locators.js';
 import type { SignupFormValues } from './types.js';
+export { TITLE_SIGNUP as SIGNUP_PAGE_TITLE } from './locators.js';
 export type { PlanIdMap, PlanName, SignupFormValues } from './types.js';
 
 export const SIGNUP_PAGE_PATH = '/ja/signup.html' as const;
-export const SIGNUP_PAGE_TITLE = '会員登録 | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
 
-export const SIGNUP_SUCCESS_TITLE =
-  'マイページ | HOTEL PLANISPHERE - テスト自動化練習サイト' as const;
+export { TITLE_MYPAGE as SIGNUP_SUCCESS_TITLE } from './locators.js';
 
 export const getEmailInput = (page: Readonly<Page>): Locator =>
   page.getByRole('textbox', { name: LABEL_EMAIL });
