@@ -15,6 +15,11 @@ on:
         options:
           - local
           - dev
+      test_files:
+        description: 'Test file(s) to run (space-separated, e.g., "login.spec.ts signup.spec.ts"). Leave empty for all tests.'
+        required: false
+        default: ''
+        type: string
 
 env:
   TEST_ENV: ${{ github.event.inputs.environment || 'local' }}
@@ -91,10 +96,19 @@ jobs:
           DOTENV_PRIVATE_KEY_LOCAL: ${{ secrets.ENV_KEY }}
           DOTENV_PRIVATE_KEY_DEV: ${{ secrets.ENV_KEY }}
         run: |
+          TEST_FILES="${{ github.event.inputs.test_files }}"
           if [ "$TEST_ENV" = "dev" ]; then
-            pnpm test:dev
+            if [ -n "$TEST_FILES" ]; then
+              pnpm test:dev -- $TEST_FILES
+            else
+              pnpm test:dev
+            fi
           else
-            pnpm test:local
+            if [ -n "$TEST_FILES" ]; then
+              pnpm test:local -- $TEST_FILES
+            else
+              pnpm test:local
+            fi
           fi
 
       - uses: actions/upload-artifact@v4
