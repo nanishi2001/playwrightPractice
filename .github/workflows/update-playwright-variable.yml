@@ -1,0 +1,35 @@
+name: Update Playwright Version Variable
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'package.json'
+
+jobs:
+  update-variable:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Get Playwright version from package.json
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').devDependencies['playwright'].replace('^', '')")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected Playwright version: $VERSION"
+
+      - name: Update GitHub Variable (PLAYWRIGHT_VERSION)
+        env:
+          GH_TOKEN: ${{ secrets.CHANGE_VARIABLES_TOKEN }}
+          VERSION: ${{ steps.get-version.outputs.version }}
+        run: |
+          gh variable set PLAYWRIGHT_VERSION --body "$VERSION"
+          echo "Updated GitHub Variable PLAYWRIGHT_VERSION to $VERSION"
