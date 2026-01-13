@@ -36,7 +36,7 @@ jobs:
       - name: Get Playwright version from package.json
         id: get-version
         run: |
-          VERSION=$(node -p "require('./package.json').devDependencies['@playwright/test'].replace('^', '')")
+          VERSION=$(node -p "require('./package.json').devDependencies['playwright'].replace('^', '')")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Playwright version: $VERSION"
 
