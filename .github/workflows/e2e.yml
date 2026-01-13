@@ -25,30 +25,14 @@ env:
   TEST_ENV: ${{ github.event.inputs.environment || 'local' }}
 
 jobs:
-  get-playwright-version:
-    name: Get Playwright Version
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.get-version.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Get Playwright version from package.json
-        id: get-version
-        run: |
-          VERSION=$(node -p "require('./package.json').devDependencies['playwright'].replace('^', '')")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Playwright version: $VERSION"
-
   e2e-tests:
     name: Run E2E Tests
-    needs: get-playwright-version
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request_target' || github.event.inputs.environment == 'local' || github.event_name == 'workflow_dispatch' }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment || 'local' }}
     container:
-      image: mcr.microsoft.com/playwright:v${{ needs.get-playwright-version.outputs.version }}-noble
+      image: mcr.microsoft.com/playwright:v${{ vars.PLAYWRIGHT_VERSION }}-noble
       options: --ipc=host
     steps:
       - uses: actions/checkout@v4
