@@ -25,12 +25,31 @@ env:
   TEST_ENV: ${{ github.event.inputs.environment || 'local' }}
 
 jobs:
+  get-playwright-version:
+    name: Get Playwright Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Playwright version from package.json
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').devDependencies['playwright'].replace('^', '')")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Playwright version: $VERSION"
+
   e2e-tests:
     name: Run E2E Tests
+    needs: get-playwright-version
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request_target' || github.event.inputs.environment == 'local' || github.event_name == 'workflow_dispatch' }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment || 'local' }}
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.get-playwright-version.outputs.version }}-noble
+      options: --ipc=host
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,6 +64,9 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
+
+      - name: Configure git safe directory
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -74,30 +96,11 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run build
 
-      - name: Get Playwright version
-        id: playwright-version
-        run: echo "version=$(node -p "require('./package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
-
-      - name: Cache Playwright Browsers
-        id: playwright-cache
-        uses: actions/cache@v5
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
-      - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm exec playwright install chromium
-
-      - name: Install system dependencies (fonts, etc.)
-        run: pnpm exec playwright install-deps chromium
-
       - name: Run Playwright tests
         env:
           DOTENV_PRIVATE_KEY_LOCAL: ${{ secrets.ENV_KEY }}
           DOTENV_PRIVATE_KEY_DEV: ${{ secrets.ENV_KEY }}
+          HOME: /root
         run: |
           TEST_FILES="${{ github.event.inputs.test_files }}"
           if [ "$TEST_ENV" = "dev" ]; then
