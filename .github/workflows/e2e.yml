@@ -68,9 +68,6 @@ jobs:
       - name: Configure git safe directory
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: Get submodule commit hash
         if: ${{ env.TEST_ENV == 'local' }}
         id: submodule-hash
@@ -82,19 +79,19 @@ jobs:
         uses: actions/cache@v5
         with:
           path: |
-            test-target
             test-target/node_modules
             test-target/dist
-          key: test-target-${{ steps.submodule-hash.outputs.hash }}-v2
+          key: test-target-${{ steps.submodule-hash.outputs.hash }}-v3
           restore-keys: |
             test-target-
 
-      - name: Setup test target
-        if: ${{ env.TEST_ENV == 'local' && steps.test-target-cache.outputs.cache-hit != 'true' }}
-        run: |
-          cd test-target
-          pnpm install --frozen-lockfile
-          pnpm run build
+      - name: Install dependencies (with test-target build)
+        if: ${{ steps.test-target-cache.outputs.cache-hit != 'true' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Install dependencies (skip test-target build)
+        if: ${{ steps.test-target-cache.outputs.cache-hit == 'true' }}
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Run Playwright tests
         env:
