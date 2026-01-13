@@ -185,6 +185,7 @@ export default [
         },
       ],
       'functional/no-return-void': 'off',
+      'functional/no-loop-statements': 'off',
       'playwright/expect-expect': 'error',
       'playwright/missing-playwright-await': 'error',
       'playwright/no-conditional-in-test': 'error',

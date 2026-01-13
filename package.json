@@ -19,6 +19,8 @@
     "test:ui:dev": "TEST_ENV=dev dotenvx run -f config/.env.dev -- playwright test --ui",
     "test:debug:local": "TEST_ENV=local dotenvx run -f config/.env.local -- playwright test --debug",
     "test:debug:dev": "TEST_ENV=dev dotenvx run -f config/.env.dev -- playwright test --debug",
+    "test:update-snapshots:local": "TEST_ENV=local dotenvx run -f config/.env.local -- playwright test --update-snapshots --grep 'Visual Regression'",
+    "test:update-snapshots:dev": "TEST_ENV=dev dotenvx run -f config/.env.dev -- playwright test --update-snapshots --grep 'Visual Regression'",
     "codegen": "playwright codegen",
     "show-report": "playwright show-report",
     "lint": "eslint --cache --fix .",
