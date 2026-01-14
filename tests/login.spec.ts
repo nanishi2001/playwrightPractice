@@ -17,18 +17,13 @@ const beforeSetup = async (page: Readonly<Page>) => {
  * Recursively generate tests for demo users
  */
 const generateTests = (entries: readonly (readonly [string, userData])[]): void => {
-  if (entries.length === 0) {
-    return;
+  for (const [username, user] of entries) {
+    test(`Successfully logs in as demo user: ${username}`, async ({ page }) => {
+      const initializedPage = await beforeSetup(page);
+      await loginPage.login(initializedPage, user.email, user.password);
+      await expect(initializedPage).toHaveTitle(mypagePage.MYPAGE_PAGE_TITLE);
+    });
   }
-  const [[username, user], ...rest] = entries;
-
-  test(`Successfully logs in as demo user: ${username}`, async ({ page }) => {
-    const initializedPage = await beforeSetup(page);
-    await loginPage.login(initializedPage, user.email, user.password);
-    await expect(initializedPage).toHaveTitle(mypagePage.MYPAGE_PAGE_TITLE);
-  });
-
-  generateTests(rest);
 };
 
 test.describe('Login Page', () => {
