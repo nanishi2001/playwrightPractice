@@ -14,6 +14,8 @@ const WORKERS = IS_CI ? CI_WORKERS : undefined;
 
 export default defineConfig({
   testDir: './tests',
+  snapshotDir: './snapshots',
+  snapshotPathTemplate: '{snapshotDir}/{arg}-{projectName}-{platform}{ext}',
   fullyParallel: true,
   forbidOnly: IS_CI,
   retries: RETRIES,
