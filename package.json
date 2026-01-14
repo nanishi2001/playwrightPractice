@@ -27,7 +27,7 @@
     "format": "prettier --write .",
     "prepare": "husky",
     "preinstall": "git submodule update --init --recursive",
-    "postinstall": "cd test-target && pnpm install && pnpm run build"
+    "postinstall": "cd test-target && pnpm install --frozen-lockfile && pnpm run build"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.51.4",
