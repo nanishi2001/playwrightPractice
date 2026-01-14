@@ -127,6 +127,10 @@ pnpm test:ui:dev
 pnpm test:debug:local
 pnpm test:debug:dev
 
+# VRTスナップショット更新
+pnpm test:update-snapshots:local
+pnpm test:update-snapshots:dev
+
 # テストコードを自動生成
 pnpm codegen
 ```
@@ -152,13 +156,48 @@ pnpm format
 
 ```text
 playwrightPractice/
-├── tests/                    # テストファイルディレクトリ
-│   └── example.spec.ts      # サンプルテスト
-├── playwright.config.ts      # Playwright設定ファイル
-├── package.json              # プロジェクト設定
-├── tsconfig.json             # TypeScript設定
-├── eslint.config.ts          # ESLint設定
-└── README.md                 # このファイル
+├── tests/                        # テストファイル
+│   ├── common/                   # 共通テスト（Header, Footer）
+│   │   ├── header.spec.ts
+│   │   └── footer.spec.ts
+│   ├── home.spec.ts              # トップページテスト
+│   ├── login.spec.ts             # ログインページテスト
+│   ├── mypage.spec.ts            # マイページテスト
+│   ├── plans.spec.ts             # 宿泊プランページテスト
+│   ├── reserve.spec.ts           # 予約ページテスト
+│   ├── signup.spec.ts            # 会員登録ページテスト
+│   ├── vrt.spec.ts               # Visual Regression Tests
+│   └── testCase.md               # テストケース仕様
+├── pages/                        # Page Object Models（関数型）
+│   ├── home.page.ts
+│   ├── login.page.ts
+│   ├── mypage.page.ts
+│   ├── plans.page.ts
+│   ├── reserve.page.ts
+│   ├── signup.page.ts
+│   ├── header.component.ts       # ヘッダーコンポーネント
+│   ├── footer.component.ts       # フッターコンポーネント
+│   ├── locators.ts               # ロケーター定数
+│   └── types.ts                  # 型定義
+├── config/                       # 環境設定
+│   ├── .env.local                # ローカル環境変数（暗号化済み）
+│   ├── .env.dev                  # dev環境変数（暗号化済み）
+│   ├── .env.example              # 環境変数テンプレート
+│   ├── local.config.ts           # ローカル環境設定
+│   ├── dev.config.ts             # dev環境設定
+│   └── types.ts                  # 設定型定義
+├── snapshots/                    # VRTスナップショット
+│   ├── home-chromium-linux.png
+│   ├── login-chromium-linux.png
+│   └── ...
+├── constants/                    # 共通定数
+├── utils/                        # ユーティリティ関数
+├── test-target/                  # テスト対象サブモジュール
+├── playwright.config.ts          # Playwright設定
+├── eslint.config.mts             # ESLint設定
+├── tsconfig.json                 # TypeScript設定
+├── prettier.config.ts            # Prettier設定
+└── README.md                     # このファイル
 ```
 
 ## 📝 ブラウザ設定
