@@ -1,75 +1,59 @@
-import { expect, test, type Page } from '@playwright/test';
 import { config } from '../config/index.js';
-import type { userData } from '../config/types.js';
 import {
   LOGIN_INVALID_ERROR_MESSAGE,
   LOGIN_REQUIRED_ERROR_MESSAGE,
 } from '../constants/error-messages.js';
-import * as loginPage from '../pages/login.page.js';
-import * as mypagePage from '../pages/mypage.page.js';
-
-const beforeSetup = async (page: Readonly<Page>) => {
-  await loginPage.navigateToLogin(page);
-  return page;
-};
-
-/**
- * Recursively generate tests for demo users
- */
-const generateTests = (entries: readonly (readonly [string, userData])[]): void => {
-  for (const [username, user] of entries) {
-    test(`Successfully logs in as demo user: ${username}`, async ({ page }) => {
-      const initializedPage = await beforeSetup(page);
-      await loginPage.login(initializedPage, user.email, user.password);
-      await expect(initializedPage).toHaveTitle(mypagePage.MYPAGE_PAGE_TITLE);
-    });
-  }
-};
+import { expect, test } from '../pages/fixtures.js';
 
 test.describe('Login Page', () => {
-  test('Page title matches', async ({ page }) => {
-    const initializedPage = await beforeSetup(page);
-    await expect(initializedPage).toHaveTitle(loginPage.LOGIN_PAGE_TITLE);
+  test('Page title matches', async ({ page, loginPage }) => {
+    await loginPage.navigateToLogin(page);
+    await expect(page).toHaveTitle(loginPage.LOGIN_PAGE_TITLE);
   });
 
-  test('Form fields are displayed', async ({ page }) => {
-    const initializedPage = await beforeSetup(page);
+  test('Form fields are displayed', async ({ page, loginPage }) => {
+    await loginPage.navigateToLogin(page);
 
-    await expect(loginPage.getEmailInput(initializedPage)).toBeVisible();
-    await expect(loginPage.getPasswordInput(initializedPage)).toBeVisible();
-    await expect(loginPage.getSubmitButton(initializedPage)).toBeVisible();
+    await expect(loginPage.getEmailInput(page)).toBeVisible();
+    await expect(loginPage.getPasswordInput(page)).toBeVisible();
+    await expect(loginPage.getSubmitButton(page)).toBeVisible();
   });
 
-  test('Shows error message with invalid credentials', async ({ page }) => {
-    const initializedPage = await beforeSetup(page);
+  test('Shows error message with invalid credentials', async ({ page, loginPage }) => {
+    await loginPage.navigateToLogin(page);
 
     await loginPage.login(
-      initializedPage,
+      page,
       config.invalidCredentials.email,
       config.invalidCredentials.password,
     );
 
+    await expect(loginPage.getEmailErrorMessage(page, LOGIN_INVALID_ERROR_MESSAGE)).toBeVisible();
     await expect(
-      loginPage.getEmailErrorMessage(initializedPage, LOGIN_INVALID_ERROR_MESSAGE),
-    ).toBeVisible();
-    await expect(
-      loginPage.getPasswordErrorMessage(initializedPage, LOGIN_INVALID_ERROR_MESSAGE),
+      loginPage.getPasswordErrorMessage(page, LOGIN_INVALID_ERROR_MESSAGE),
     ).toBeVisible();
   });
 
-  test('Shows validation error with empty fields', async ({ page }) => {
-    const initializedPage = await beforeSetup(page);
+  test('Shows validation error with empty fields', async ({ page, loginPage }) => {
+    await loginPage.navigateToLogin(page);
 
-    await loginPage.getSubmitButton(initializedPage).click();
+    await loginPage.getSubmitButton(page).click();
 
+    await expect(loginPage.getEmailErrorMessage(page, LOGIN_REQUIRED_ERROR_MESSAGE)).toBeVisible();
     await expect(
-      loginPage.getEmailErrorMessage(initializedPage, LOGIN_REQUIRED_ERROR_MESSAGE),
-    ).toBeVisible();
-    await expect(
-      loginPage.getPasswordErrorMessage(initializedPage, LOGIN_REQUIRED_ERROR_MESSAGE),
+      loginPage.getPasswordErrorMessage(page, LOGIN_REQUIRED_ERROR_MESSAGE),
     ).toBeVisible();
   });
 
-  // Dynamic test generation for demo users from config
-  generateTests(Object.entries(config.userData));
+  for (const [username, user] of Object.entries(config.userData)) {
+    test(`Successfully logs in as demo user: ${username}`, async ({
+      page,
+      loginPage,
+      mypagePage,
+    }) => {
+      await loginPage.navigateToLogin(page);
+      await loginPage.login(page, user.email, user.password);
+      await expect(page).toHaveTitle(mypagePage.MYPAGE_PAGE_TITLE);
+    });
+  }
 });
