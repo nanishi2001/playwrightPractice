@@ -1,14 +1,8 @@
-import { expect, test, type Page } from '@playwright/test';
-import * as homePage from '../pages/home.page.js';
-
-const beforeSetup = async (page: Readonly<Page>) => {
-  await homePage.navigateToHome(page);
-  return page;
-};
+import { expect, test } from '../pages/fixtures.js';
 
 test.describe('Top Page', () => {
-  test('Page title matches', async ({ page }) => {
-    const initializedPage = await beforeSetup(page);
-    await expect(initializedPage).toHaveTitle(homePage.HOME_PAGE_TITLE);
+  test('Page title matches', async ({ page, homePage }) => {
+    await homePage.navigateToHome(page);
+    await expect(page).toHaveTitle(homePage.HOME_PAGE_TITLE);
   });
 });
