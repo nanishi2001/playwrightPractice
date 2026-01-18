@@ -48,6 +48,7 @@
     "lint-staged": "^16.2.7",
     "playwright": "^1.57.0",
     "prettier": "^3.7.3",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "^5.3.0",
     "typescript-eslint": "^8.48.1"
   },
@@ -59,8 +60,5 @@
     "*.{json,md,markdown,html}": [
       "pnpm format"
     ]
-  },
-  "dependencies": {
-    "prettier-plugin-organize-imports": "^4.3.0"
   }
 }
