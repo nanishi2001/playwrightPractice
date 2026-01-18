@@ -49,10 +49,11 @@ jobs:
         name: Install pnpm
         with:
           run_install: false
+          package_json_file: 'package.json'
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version-file: 'package.json'
           cache: 'pnpm'
 
       - name: Configure git safe directory
